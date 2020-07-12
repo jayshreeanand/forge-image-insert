@@ -14,42 +14,41 @@ import api from "@forge/api";
 const UNSPLASH_API_BASE_URL = "https://api.unsplash.com/";
 
 interface UnsplashJson {
-  title: string;
-  url: string;
+  alt_description: string;
+  small: string;
 }
 
 const fallbackDataArray = [
   {
-    title: "Random",
-    images: {
-      fixed_height: {
-        url: "https://media.giphy.com/media/Tnchbhzt4fQQM/giphy.gif",
-      },
+    alt_description: "Random",
+    urls: {
+      small: "https://media.giphy.com/media/Tnchbhzt4fQQM/giphy.gif",
     },
   },
 ];
 
 const getRandomImage = async (summary): Promise<UnsplashJson> => {
   console.log("Making Unsplash API call...");
+  console.log("env variabe");
+  console.log(process.env.UNSPLASH_ACCESS_KEY);
   const uri = `${UNSPLASH_API_BASE_URL}search/photos/?client_id=${process.env.UNSPLASH_ACCESS_KEY}&query=${summary}`;
   const response = await api.fetch(encodeURI(uri));
 
   const body = await response.json();
-  var dataArray = body.data;
+  console.log(body);
+  var dataArray = body.results;
   if (dataArray == undefined || dataArray.length == 0) {
     dataArray = fallbackDataArray;
   }
   const data = dataArray[Math.floor(Math.random() * dataArray.length)];
   const {
-    title,
-    images: {
-      fixed_height: { url },
-    },
+    alt_description,
+    urls: { small },
   } = data;
 
   return {
-    title,
-    url,
+    alt_description,
+    small,
   };
 };
 
@@ -63,13 +62,13 @@ const getRandomImage = async (summary): Promise<UnsplashJson> => {
 // };
 
 interface ImageCardProps {
-  title: string;
+  alt_description: string;
   src: string;
 }
 
-const ImageCard = ({ title, src }: ImageCardProps) => (
+const ImageCard = ({ alt_description, src }: ImageCardProps) => (
   <Fragment>
-    <Image src={src} alt={title} />
+    <Image src={src} alt={alt_description} />
   </Fragment>
 );
 
@@ -78,14 +77,14 @@ const App = () => {
   // const summary = useState(
   //   async () => await fetchCommentsForIssue(context.platformContext.issueKey)
   // )[0];
-  const [{ title, url }, setRandomImage] = useAction(
+  const [{ alt_description, small }, setRandomImage] = useAction(
     async () => await getRandomImage("happy"),
     async () => await getRandomImage("happy")
   );
 
   return (
     <Fragment>
-      <ImageCard src={url} title={title} />
+      <ImageCard src={small} title={alt_description} />
       <Button
         text="Generate new Photo"
         onClick={() => {
