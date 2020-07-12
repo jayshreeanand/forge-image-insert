@@ -12,6 +12,8 @@ import ForgeUI, {
   IssuePanel,
   TextField,
   Macro,
+  Select,
+  Option,
 } from "@forge/ui";
 import api from "@forge/api";
 
@@ -19,6 +21,7 @@ const UNSPLASH_API_BASE_URL = "https://api.unsplash.com/";
 
 const defaultConfig = {
   searchTerm: "happy",
+  size: "small",
 };
 
 interface UnsplashJson {
@@ -79,9 +82,20 @@ const App = () => {
     async () => await getRandomImage(config.searchTerm)
   );
 
+  var imageUrl;
+  if (config.size == "small") {
+    imageUrl = small + "&w=400";
+  } else if (config.size == "medium") {
+    imageUrl = small + "&w=600";
+  } else if (config.size == "large") {
+    imageUrl = small + "&w=800";
+  } else {
+    imageUrl = small + "&w=500";
+  }
+
   return (
     <Fragment>
-      <ImageCard src={small} title={alt_description} />
+      <ImageCard src={imageUrl} title={alt_description} />
       {/* <Button
         text="Generate new Photo"
         onClick={() => {
@@ -100,6 +114,12 @@ const Config = () => {
         name="searchTerm"
         defaultValue="happy"
       ></TextField>
+      <Select label="Size" name="size">
+        <Option label="Regular" value="regular" />
+        <Option label="Small" value="small" />
+        <Option label="Medium" value="medium" />
+        <Option label="Large" value="large" />
+      </Select>
     </ConfigForm>
   );
 };
