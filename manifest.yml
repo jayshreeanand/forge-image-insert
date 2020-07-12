@@ -1,5 +1,5 @@
 modules:
-  "jira:issuePanel":
+  macro:
     - key: forge-image-insert
       function: main
       title: Insert Image

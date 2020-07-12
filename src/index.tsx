@@ -53,14 +53,14 @@ const getRandomImage = async (summary): Promise<UnsplashJson> => {
   };
 };
 
-const fetchCommentsForIssue = async (issueId) => {
-  const res = await api
-    .asApp()
-    .requestJira(`/rest/api/3/issue/${issueId}?fields=summary`);
+// const fetchCommentsForIssue = async (issueId) => {
+//   const res = await api
+//     .asApp()
+//     .requestJira(`/rest/api/3/issue/${issueId}?fields=summary`);
 
-  const data = await res.json();
-  return data.fields.summary;
-};
+//   const data = await res.json();
+//   return data.fields.summary;
+// };
 
 interface ImageCardProps {
   title: string;
@@ -75,12 +75,12 @@ const ImageCard = ({ title, src }: ImageCardProps) => (
 
 const App = () => {
   const context = useProductContext();
-  const summary = useState(
-    async () => await fetchCommentsForIssue(context.platformContext.issueKey)
-  )[0];
+  // const summary = useState(
+  //   async () => await fetchCommentsForIssue(context.platformContext.issueKey)
+  // )[0];
   const [{ title, url }, setRandomImage] = useAction(
-    async () => await getRandomImage(summary),
-    async () => await getRandomImage(summary)
+    async () => await getRandomImage("happy"),
+    async () => await getRandomImage("happy")
   );
 
   return (
