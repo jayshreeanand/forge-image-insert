@@ -1,17 +1,25 @@
 import ForgeUI, {
   render,
   Text,
+  ConfigForm,
   Fragment,
   Image,
   useAction,
   Button,
   useState,
   useProductContext,
+  useConfig,
   IssuePanel,
+  TextField,
+  Macro,
 } from "@forge/ui";
 import api from "@forge/api";
 
 const UNSPLASH_API_BASE_URL = "https://api.unsplash.com/";
+
+const defaultConfig = {
+  searchTerm: "happy",
+};
 
 interface UnsplashJson {
   alt_description: string;
@@ -73,13 +81,41 @@ const ImageCard = ({ title, src }: ImageCardProps) => (
 );
 
 const App = () => {
+  const config = useConfig();
+
+  // const searchImage = async () => {
+  //   if (config && config.searchTerm) {
+  //     const context = useProductContext();
+  //     const bodyData = [
+  //       {
+  //         prefix: "global",
+  //         name: config.searchTerm,
+  //       },
+  //     ];
+  //     await api
+  //       .asUser()
+  //       .requestConfluence(
+  //         `/wiki/rest/api/content/${context.contentId}/label`,
+  //         {
+  //           method: "POST",
+  //           body: JSON.stringify(bodyData),
+  //         }
+  //       );
+  //   }
+  // };
+
+  // useAction(
+  //   (value) => value,
+  //   async () => await searchImage()
+  // );
+
   const context = useProductContext();
   // const summary = useState(
   //   async () => await fetchCommentsForIssue(context.platformContext.issueKey)
   // )[0];
   const [{ alt_description, small }, setRandomImage] = useAction(
-    async () => await getRandomImage("happy"),
-    async () => await getRandomImage("happy")
+    async () => await getRandomImage(config.searchTerm),
+    async () => await getRandomImage(config.searchTerm)
   );
 
   return (
@@ -95,8 +131,20 @@ const App = () => {
   );
 };
 
+const Config = () => {
+  return (
+    <ConfigForm>
+      <TextField
+        label="Search Term"
+        name="searchTerm"
+        defaultValue="happy"
+      ></TextField>
+    </ConfigForm>
+  );
+};
+
 export const run = render(
   <IssuePanel>
-    <App />
+    <Macro app={<App />} config={<Config />} defaultConfig={defaultConfig} />
   </IssuePanel>
 );
