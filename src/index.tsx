@@ -23,14 +23,14 @@ const defaultConfig = {
 
 interface UnsplashJson {
   alt_description: string;
-  regular: string;
+  small: string;
 }
 
 const fallbackDataArray = [
   {
     alt_description: "Random",
     urls: {
-      regular: "https://media.giphy.com/media/Tnchbhzt4fQQM/giphy.gif",
+      small: "https://media.giphy.com/media/Tnchbhzt4fQQM/giphy.gif",
     },
   },
 ];
@@ -51,12 +51,12 @@ const getRandomImage = async (summary): Promise<UnsplashJson> => {
   const data = dataArray[0];
   const {
     alt_description,
-    urls: { regular },
+    urls: { small },
   } = data;
 
   return {
     alt_description,
-    regular,
+    small,
   };
 };
 
@@ -74,14 +74,14 @@ const ImageCard = ({ title, src }: ImageCardProps) => (
 const App = () => {
   const config = useConfig();
   const context = useProductContext();
-  const [{ alt_description, regular }, setRandomImage] = useAction(
+  const [{ alt_description, small }, setRandomImage] = useAction(
     async () => await getRandomImage(config.searchTerm),
     async () => await getRandomImage(config.searchTerm)
   );
 
   return (
     <Fragment>
-      <ImageCard src={regular} title={alt_description} />
+      <ImageCard src={small} title={alt_description} />
       {/* <Button
         text="Generate new Photo"
         onClick={() => {
