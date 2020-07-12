@@ -48,7 +48,7 @@ const getRandomImage = async (summary): Promise<UnsplashJson> => {
   if (dataArray == undefined || dataArray.length == 0) {
     dataArray = fallbackDataArray;
   }
-  const data = dataArray[Math.floor(Math.random() * dataArray.length)];
+  const data = dataArray[0];
   const {
     alt_description,
     urls: { regular },
@@ -82,12 +82,12 @@ const App = () => {
   return (
     <Fragment>
       <ImageCard src={regular} title={alt_description} />
-      <Button
+      {/* <Button
         text="Generate new Photo"
         onClick={() => {
           setRandomImage();
         }}
-      />
+      /> */}
     </Fragment>
   );
 };
