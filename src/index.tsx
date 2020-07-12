@@ -23,14 +23,14 @@ const defaultConfig = {
 
 interface UnsplashJson {
   alt_description: string;
-  small: string;
+  regular: string;
 }
 
 const fallbackDataArray = [
   {
     alt_description: "Random",
     urls: {
-      small: "https://media.giphy.com/media/Tnchbhzt4fQQM/giphy.gif",
+      regular: "https://media.giphy.com/media/Tnchbhzt4fQQM/giphy.gif",
     },
   },
 ];
@@ -51,23 +51,14 @@ const getRandomImage = async (summary): Promise<UnsplashJson> => {
   const data = dataArray[Math.floor(Math.random() * dataArray.length)];
   const {
     alt_description,
-    urls: { small },
+    urls: { regular },
   } = data;
 
   return {
     alt_description,
-    small,
+    regular,
   };
 };
-
-// const fetchCommentsForIssue = async (issueId) => {
-//   const res = await api
-//     .asApp()
-//     .requestJira(`/rest/api/3/issue/${issueId}?fields=summary`);
-
-//   const data = await res.json();
-//   return data.fields.summary;
-// };
 
 interface ImageCardProps {
   title: string;
@@ -82,45 +73,15 @@ const ImageCard = ({ title, src }: ImageCardProps) => (
 
 const App = () => {
   const config = useConfig();
-
-  // const searchImage = async () => {
-  //   if (config && config.searchTerm) {
-  //     const context = useProductContext();
-  //     const bodyData = [
-  //       {
-  //         prefix: "global",
-  //         name: config.searchTerm,
-  //       },
-  //     ];
-  //     await api
-  //       .asUser()
-  //       .requestConfluence(
-  //         `/wiki/rest/api/content/${context.contentId}/label`,
-  //         {
-  //           method: "POST",
-  //           body: JSON.stringify(bodyData),
-  //         }
-  //       );
-  //   }
-  // };
-
-  // useAction(
-  //   (value) => value,
-  //   async () => await searchImage()
-  // );
-
   const context = useProductContext();
-  // const summary = useState(
-  //   async () => await fetchCommentsForIssue(context.platformContext.issueKey)
-  // )[0];
-  const [{ alt_description, small }, setRandomImage] = useAction(
+  const [{ alt_description, regular }, setRandomImage] = useAction(
     async () => await getRandomImage(config.searchTerm),
     async () => await getRandomImage(config.searchTerm)
   );
 
   return (
     <Fragment>
-      <ImageCard src={small} title={alt_description} />
+      <ImageCard src={regular} title={alt_description} />
       <Button
         text="Generate new Photo"
         onClick={() => {
