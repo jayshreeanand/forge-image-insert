@@ -62,13 +62,13 @@ const getRandomImage = async (summary): Promise<UnsplashJson> => {
 // };
 
 interface ImageCardProps {
-  alt_description: string;
+  title: string;
   src: string;
 }
 
-const ImageCard = ({ alt_description, src }: ImageCardProps) => (
+const ImageCard = ({ title, src }: ImageCardProps) => (
   <Fragment>
-    <Image src={src} alt={alt_description} />
+    <Image src={src} alt={title} />
   </Fragment>
 );
 
