@@ -1,0 +1,12 @@
+modules:
+  macro:
+    - key: forge-image-insert-hello-world
+      function: main
+      title: forge-image-insert
+      description: Inserts Hello world!
+  function:
+    - key: main
+      handler: index.run
+app:
+  id: 'ari:cloud:ecosystem::app/016e33b7-ae4a-4c05-8e43-a901f2d9b0ab'
+  name: forge-image-insert
