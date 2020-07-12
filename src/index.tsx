@@ -84,13 +84,13 @@ const App = () => {
 
   var imageUrl;
   if (config.size == "small") {
-    imageUrl = small + "&w=400";
+    imageUrl = small + "&w=300";
   } else if (config.size == "medium") {
-    imageUrl = small + "&w=600";
-  } else if (config.size == "large") {
-    imageUrl = small + "&w=800";
-  } else {
     imageUrl = small + "&w=500";
+  } else if (config.size == "large") {
+    imageUrl = small + "&w=700";
+  } else {
+    imageUrl = small + "&w=400";
   }
 
   return (
