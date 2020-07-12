@@ -1,12 +1,13 @@
 modules:
-  macro:
-    - key: forge-image-insert-hello-world
+  "jira:issuePanel":
+    - key: forge-image-insert
       function: main
-      title: forge-image-insert
-      description: Inserts Hello world!
+      title: Insert Image
+      icon: "https://atlassian.design/favicon.png"
+      description: Insert image from Unsplash!
   function:
     - key: main
       handler: index.run
 app:
-  id: 'ari:cloud:ecosystem::app/016e33b7-ae4a-4c05-8e43-a901f2d9b0ab'
+  id: "ari:cloud:ecosystem::app/016e33b7-ae4a-4c05-8e43-a901f2d9b0ab"
   name: forge-image-insert
